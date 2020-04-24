@@ -9,11 +9,11 @@ const authUser = require('./app/services/authService');
 connectDB(); 
 
 app.use(morgan('dev'));
-app.use(express.static(__dirname + '/public'));
+app.use(express.static(__dirname + '/docs'));
 
 
 app.get('/', function (request, response) {
-	response.sendfile('./public/index.html')
+	response.sendfile('./docs/index.html')
 });
 
 app.get('/auth', function (request, response) {
