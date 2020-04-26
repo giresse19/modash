@@ -1,37 +1,41 @@
-var mongoose = require('mongoose');
+var mongoose = require("mongoose");
 var Schema = mongoose.Schema;
 
 var userSchema = new Schema({
+  user_id: {
+    type: String,
+  },
+  username: {
+    type: String,
+  },
 
-	id:{
-		type: String,
-	}, 
+  full_name: {
+    type: String,
+  },
 
-	username: {
-		type: String,
-		required: true
-	},
+  biography: {
+    type: String,
+  },
 
-	full_name:{
-		type: String,
-	}, 
+  website: {
+    type: String,
+  },
 
-	bio:{
-		type: String,
-	}, 
+  profile_picture_url: {
+    type: String,
+  },
 
-	website:{
-		type: String,
-	}, 
+  media_count: {
+    type: Number,
+  },
 
-	profile_picture:{
-		type: String,
-	}, 
-	
-	access_token:{
-		type: String,
-	}, 
+  followers_count: {
+    type: Number,
+  },
 
+  follows_count: {
+	type: Number,
+  },
 });
 
-module.exports = mongoose.model('User', userSchema);
+module.exports = mongoose.model("User", userSchema);

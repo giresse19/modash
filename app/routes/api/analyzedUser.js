@@ -1,53 +1,27 @@
 const express = require("express");
 const router = express.Router();
-const config = require('../../../config/config')
-const { check, validationResult } = require("express-validator");
+const config = require('../../../config/config');
 
-const User = require("../../models/User");
 
-// @route GET api/analyze
-// @desc request profile to analyze
+// @route GET auth
+// @desc request to get auth from FB API
 // access public
 router.get("/", async (req, res) => {
+  if (!req.query.code) {   
   try {
-    res.redirect(config.instagram.auth_url);
+    res.redirect(config.instagram.fb_auth_url);
+
+    //checks whether a user denied the app facebook login/permissions
+    if (!req.query.error) { 
+      res.redirect(config.instagram.fb_auth_url);
+    } else {  //req.query.error == 'access_denied'
+      res.send('access denied');
+    }
   } catch (err) {
-      console.err(err.message);
-    res.status(500).send("Server Error");
+      console.log(err.message);    
   }
+}
 });
 
-// @route POST api/analyze
-// @desc request profile to analyze
-// @access Public
-router.post(
-  "/",
-  [check("username", "Account username is required").not().isEmpty()],
-  async (req, res) => {
-    const errors = validationResult(req);
-
-    if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array() });
-    }
-
-    const { username } = req.body;
-
-    try {
-      // see if user exist
-      let user = await User.findOne({ username });
-
-      // this will be changed later....
-      if (user) {
-        return res
-          .status(400)
-          .json({ errors: [{ msg: "User exist" }] });
-      }
-   
-    } catch (err) {
-      console.error(err.message);
-      res.status(500).send("Server Error");
-    }
-  }
-);
 
 module.exports = router;
