@@ -1,40 +1,31 @@
-const express = require('express');
+const express = require("express");
 const app = express();
-const db = require('./config/db');
-const config = require('./config/config');
+const db = require("./config/db");
+const config = require("./config/config");
 
-const services = require('./app/services/services');
-const errorHandler = require('errorhandler');
+const services = require("./app/services/profile");
+const errorHandler = require("errorhandler");
 
 // connect to DB
-db.connectDB(); 
+db.connectDB();
 
 // Init Middleware
-app.use(express.json({extended: false}));
+app.use(express.json({ extended: false }));
 
-// app.use(morgan('dev'));
-app.use(express.static(__dirname + '/public'));
-
-
-app.get('/', function (request, response) {
-	response.sendfile('./public/index.html')
+app.use((req, res, next) => {
+  res.setHeader("Content-Type", "application/json");
+  next();
 });
 
-// routes handling Oauth
-app.get('/auth', services.authApp);
-
-
-app.use('/login', require('./app/routes/api/analyzedUser'));
-
 // Defined routes:
-app.use('/analyze/username',  require('./app/routes/api/getUsername'));
+app.use("/analyze/username", require("./app/routes/api/getUsername"));
 
-app.get('/api/v1/profile',  require('./app/routes/api/getUsername'));
+app.get("/api/v1/profile", async (req, res) => await services.getUser(req.query.name, res));
 
-app.get('/api/v1/list',  require('./app/routes/api/getUsername'));
+app.listen(config.port, () =>
+  console.log(`Server started on port ${config.port}`)
+);
 
-app.listen(config.port, ()=> console.log(`Server started on port ${config.port}`));
-
-if ('development' == config.env) {
-	app.use(errorHandler({ dumpExceptions: true, showStack: true }));
- }
+if ("development" == config.env) {
+  app.use(errorHandler({ dumpExceptions: true, showStack: true }));
+}

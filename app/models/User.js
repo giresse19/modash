@@ -2,10 +2,10 @@ var mongoose = require("mongoose");
 var Schema = mongoose.Schema;
 
 var userSchema = new Schema({
-  user_id: {
+  user_ig_id: {
     type: String,
   },
-  username: {
+  name: {
     type: String,
   },
 
@@ -34,8 +34,30 @@ var userSchema = new Schema({
   },
 
   follows_count: {
-	type: Number,
+    type: Number,
   },
+
+  overall_category_name: {
+    type: String,
+  },
+
+  media: [
+    {
+      media_url: String,
+      timestamp: Date,
+      comments_count: Number,
+      like_count: Number,
+      id: String,
+    },
+  ],
+
+  insights:
+    {
+      labels: [String],
+      brands: [String],
+    
+    },
+  
 });
 
-module.exports = mongoose.model("User", userSchema);
+module.exports = mongoose.model("User", userSchema, "user");
