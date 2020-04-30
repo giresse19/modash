@@ -1,5 +1,5 @@
 const vision = require("@google-cloud/vision");
-const config = require("../../config/config");
+const config = require("../../config/config.ts");
 const axios = require('axios');
 
 const getProfile = async (name) => {

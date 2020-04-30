@@ -1,9 +1,8 @@
 const express = require("express");
 const router = express.Router();
 const { check, validationResult } = require("express-validator");
-const User = require('../../models/User')
 
-const services = require("../../services/profile");
+const services = require("../../services/profile.ts");
 
 // @route POST api/analyze/username
 // @desc request profile to analyze

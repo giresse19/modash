@@ -1,9 +1,9 @@
 const express = require("express");
 const app = express();
-const db = require("./config/db");
-const config = require("./config/config");
+const db = require("./config/db.ts");
+const config = require("./config/config.ts");
 
-const services = require("./app/services/profile");
+const services = require("./app/services/profile.ts");
 const errorHandler = require("errorhandler");
 
 // connect to DB
@@ -18,7 +18,7 @@ app.use((req, res, next) => {
 });
 
 // Defined routes:
-app.use("/analyze/username", require("./app/routes/api/getUsername"));
+app.use("/analyze/username", require("./app/routes/api/getUsername.ts"));
 
 app.get("/api/v1/profile", async (req, res) => await services.getUser(req.query.name, res));
 

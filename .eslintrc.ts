@@ -19,7 +19,6 @@ module.exports = {
     "no-empty": ["error"], // Empty block statement
     "no-octal": ["error"], // Octal literals should not be used
     "no-redeclare": ["error"], // '...' is already defined
-    "no-unused-vars": ["error"], // '...' is assigned a value but never used
-    "semi": ["error"], // Missing semicolon
+    "no-unused-vars": ["error"], // '...' is assigned a value but never used    
   }
 };

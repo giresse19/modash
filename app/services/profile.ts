@@ -1,11 +1,10 @@
-const getMedia = require("../helper/getMedia");
-const helper = require("../helper/getImageRequest");
+const getMediaFunc = require("../helper/getMedia.ts");
+const helper = require("../helper/getImageRequest.ts");
 
-const User = require("../models/User");
-const db = require("../../config/db");
+const User = require("../models/User.ts");
 
 module.exports = {
-  profile: async (req, res, name) => {
+  profile: async function(req, res, name){
     try {
       const results = await helper.getProfile(name);
 
@@ -28,8 +27,8 @@ module.exports = {
       const videoMedia = edge_felix_video_timeline.edges;
       const { media_count, edges } = edge_owner_to_timeline_media;
 
-      const picMedia = getMedia(edges);
-      const vidMedia = getMedia(videoMedia);
+      const picMedia = getMediaFunc(edges);
+      const vidMedia = getMediaFunc(videoMedia);
 
       const media = picMedia.concat(vidMedia);
       const insights = await helper.getImageInsights(media);
@@ -47,7 +46,7 @@ module.exports = {
         );
       }
 
-       user = new User({
+       const user = new User({
        biography,
          followers_count,
         follows_count,
