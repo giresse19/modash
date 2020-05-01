@@ -1,0 +1,84 @@
+var mongoose = require("mongoose");
+var Schema = mongoose.Schema;
+
+var userSchema = new Schema({
+  user_ig_id: {
+    type: String,
+  },
+  name: {
+    type: String,
+  },
+
+  full_name: {
+    type: String,
+  },
+
+  biography: {
+    type: String,
+  },
+
+  website: {
+    type: String,
+  },
+
+  profile_pic_url: {
+    type: String,
+  },
+
+  media_count: {
+    type: Number,
+  },
+
+  followers_count: {
+    type: Number,
+  },
+
+  follows_count: {
+    type: Number,
+  },
+
+  engagement: {
+    type: Number,
+  },
+
+  average_likes :{
+    type: Number
+  },
+
+  overall_category_name: {
+    type: String,
+  },
+
+  media: [
+    {
+      media_url: String,
+      timestamp: Date,
+      comments_count: Number,
+      like_count: Number,
+      MediaEngagement:Number,
+      caption:String,
+      id: String,
+    },
+  ],
+
+  insights:
+    {
+      labels: [
+        {
+          description: String,
+          score: String
+        }
+       
+      ],
+      brands: [
+        {
+          description: String,
+          score: String
+        }
+      ],
+    
+    },
+  
+});
+
+module.exports = mongoose.model("User", userSchema, "user");
