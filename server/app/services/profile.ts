@@ -1,9 +1,14 @@
+export {};
 const getMediaFunc = require("../helper/getMedia.ts");
 const helper = require("../helper/getImageRequest.ts");
+
+const caption = require('../helper/parseCaption');
+const getBatchImageRequest = require('../helper/getBatchImageRequest')
 
 const User = require("../models/User.ts");
 
 module.exports = {
+
   profile: async function (req: any, res: any, name: string) {
     try {
       const results = await helper.getProfile(name);
@@ -32,13 +37,22 @@ module.exports = {
         edges
       );
 
-      // const media = getMediaFunc(videoMedia);
-      console.log("media details", total_likes, like_count);
-      const average_likes = (total_likes / like_count);
+      const imageRequest = getBatchImageRequest(media);
+      
+       const insights = await helper.getImageInsights(media);
 
-      const insights = await helper.getImageInsights(media);
+      // batch image request
+      // const batchInsights = await helper.getBatchImage(imageRequest)
+
+      // get average likes
+      const average_likes = like_count !== 0 ? (total_likes / like_count) : 0;
+
+      const popular_tags = await caption.captionMode(media);
+console.log("popular tags", popular_tags);
+
       const userProfile = await User.findOne({ name });
 
+      // remove old user in DB, inorder to update with newly fetch/scraped result from instagram API.
       if (userProfile) {
         User.findOneAndRemove({ name: name }, (error: any, user: any) => {
           if (error) {
@@ -64,6 +78,7 @@ module.exports = {
         engagement,
         average_likes: average_likes,
         insights,
+        popular_tags,
       });
 
       user.save();

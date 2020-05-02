@@ -48,34 +48,21 @@ const getImageInsights = async (array: any) => {
   return obj;
 };
 
-const getBatchImage = async () => {
-  const features = [{ type: "LABEL_DETECTION" }];
+const getBatchImage = async (imageRequest:any[]) => {
 
-  const inputImageUri: string = "";
   const outputUri: string = "";
-
-  const imageRequest = {
-    image: {
-      source: {
-        imageUri: inputImageUri,
-      },
-    },
-    features: features,
-  };
 
   // Set where to store the results for the images that will be annotated.
   const outputConfig = {
     gcsDestination: {
       uri: outputUri,
     },
-    batchSize: 2, // The max number of responses to output in each JSON file
+    batchSize: 2, // max number of responses to output in each JSON file
   };
 
   // Add each image request object to the batch request and add the output config.
   const request = {
-    requests: [
-      imageRequest, // add additional request objects here
-    ],
+    requests: imageRequest,
     outputConfig,
   };
 

@@ -1,22 +1,19 @@
 <template>
   <div id="app">    
     <Header />
-    <UserList />
-    <Profile />
+    <router-view></router-view>
   </div>
 </template>
 
 <script>
-import UserList from './components/UserList.vue'
-import Profile from './components/Profile.vue'
+
 import Header from './components/Header.vue'
 
 export default {
   name: 'App',
   components: {
     Header,
-    UserList,
-    Profile
+
   }
 }
 </script>

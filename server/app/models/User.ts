@@ -48,6 +48,10 @@ var userSchema = new Schema({
   overall_category_name: {
     type: String,
   },
+  
+  popular_tags: {
+    type: Object,
+  },
 
   media: [
     {

@@ -46,7 +46,7 @@ const getMedia = (array: any[]) => {
     obj.MediaEngagement = obj.comments_count + obj.like_count;
     obj.id = el.node.id;
     obj.caption = el.node.edge_media_to_caption.edges[0].node.text
-    
+
     // Since, generally speaking number of media item isn't same as number of like count,
     // we need to count actual number of likes
     if (obj.like_count > 0) result.like_count = result.like_count + 1;
@@ -55,7 +55,7 @@ const getMedia = (array: any[]) => {
       obj.children = el.node.edge_sidecar_to_children.edges;
 
     result.engagement += obj.MediaEngagement;
-     result.total_likes += obj.like_count;
+    result.total_likes += obj.like_count;
     result.media.push(obj);
   }
   return result;
