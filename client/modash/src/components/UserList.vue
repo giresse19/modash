@@ -1,14 +1,18 @@
 <template>
   <div class="users">
-    <div v-for="user in users" :key="user._id" class="user">
+    <div
+      v-for="user in users"
+      :key="user._id"
+      class="user"
+      @click="openProfile(user.name)"
+    >
       <article class="media">
         <div class="col-1">
           <figure class="image is-64x64">
-            <img :src="user.profile_pic_url" alt="Image" />
+            <img :src="user.profile_pic_url" alt="Image" style="width: 60px" />
             <div style="width: 208px">
               <p>
                 <strong>{{ user.full_name }}</strong>
-                <br />
                 <br />
                 <small>@{{ user.name }} </small>
               </p>
@@ -18,7 +22,6 @@
         <div class="col-2">
           <strong>{{ user.followers_count }}</strong>
           <br />
-          <br />
           <span class="others">Followers</span>
         </div>
         <div class="col-3">
@@ -27,7 +30,6 @@
               (user.engagement / user.followers_count).toFixed(2)
             }})%</strong
           >
-          <br />
           <br />
           <span class="others">Engagement(Engagement rate)</span>
         </div>
@@ -43,6 +45,12 @@ export default {
   name: "UserList",
   methods: {
     ...mapActions(["fetchUsers"]),
+    openProfile(username) {
+      this.$router.push({
+        name: "profile",
+        params: {username} 
+      });
+    },
   },
   computed: mapGetters(["users"]),
   created() {
@@ -63,7 +71,7 @@ export default {
   border-radius: 2px;
   margin-bottom: 20px;
   margin-top: 10px;
-    cursor: pointer;
+  cursor: pointer;
 }
 
 .media {
@@ -90,7 +98,7 @@ figure {
 }
 
 img {
-  border-radius: 300px;
+  border-radius: 60px;
 }
 strong {
   color: #000000;

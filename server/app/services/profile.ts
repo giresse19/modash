@@ -2,13 +2,11 @@ export {};
 const getMediaFunc = require("../helper/getMedia.ts");
 const helper = require("../helper/getImageRequest.ts");
 
-const caption = require('../helper/parseCaption');
-const getBatchImageRequest = require('../helper/getBatchImageRequest')
+const caption = require("../helper/parseCaption");
 
 const User = require("../models/User.ts");
 
 module.exports = {
-
   profile: async function (req: any, res: any, name: string) {
     try {
       const results = await helper.getProfile(name);
@@ -18,7 +16,7 @@ module.exports = {
         edge_felix_video_timeline,
         full_name,
         edge_follow,
-        overall_category_name,        
+        overall_category_name,
         profile_pic_url,
         website,
         id,
@@ -30,25 +28,25 @@ module.exports = {
       let followers_count = edge_followed_by.count;
       let follows_count = edge_follow.count;
 
-      // const videoMedia = edge_felix_video_timeline.edges;
+       const videoMedia = edge_felix_video_timeline.edges;
+
       const { media_count, edges } = edge_owner_to_timeline_media;
 
+      const videoAndPictureMedia = videoMedia.concat(edges)
+
       const { media, engagement, total_likes, like_count } = getMediaFunc(
-        edges
+        videoAndPictureMedia
       );
+   
+      const insights = await helper.getImageInsights(media);
 
-      const imageRequest = getBatchImageRequest(media);
-      
-       const insights = await helper.getImageInsights(media);
-
-      // batch image request
-      // const batchInsights = await helper.getBatchImage(imageRequest)
-
+      console.log("insights", insights)
+    
       // get average likes
-      const average_likes = like_count !== 0 ? (total_likes / like_count) : 0;
+      const average_likes = like_count !== 0 ? total_likes / like_count : 0;
 
       const popular_tags = await caption.captionMode(media);
-console.log("popular tags", popular_tags);
+      console.log("popular tags", popular_tags)
 
       const userProfile = await User.findOne({ name });
 

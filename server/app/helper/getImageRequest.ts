@@ -1,6 +1,7 @@
 const vision = require("@google-cloud/vision");
 const IgConfig = require("../../config/config.ts");
 const axios = require("axios");
+const helper = require("./parseCaption");
 
 // Instantiates a client
 const client = new vision.ImageAnnotatorClient();
@@ -16,69 +17,107 @@ const getProfile = async (name: string) => {
   }
 };
 
+// faster than using javascript's array methods such as filter or reduce
+const distinct = (arr: any[], key: string) => {
+  const newArr: any = [...arr];
+  const distinct: any = [];
+  const isPresent: any = {};
+
+  for (let item of newArr) {
+    if (!isPresent[item[key]]) {
+      distinct.push(item);
+      isPresent[item[key]] = 1;
+    }
+  }
+  return distinct;
+};
+
 // @desc: Get media insights for label and logo from google vision API.
 // API allows batch request,
 // However,response from such request can only be stored in google cloud storage.
 // Hence, for this task, opted to go with single request per media item.
+
 const getImageInsights = async (array: any) => {
   const newArr = [...array];
-  const obj = {
-    labels: [{ description: String, score: String }],
-    brands: [{ description: String, score: String }],
-  };
 
-  for (let el of newArr) {
-    let [result] = await client.labelDetection(el.media_url);
-    let [logo] = await client.logoDetection(el.media_url);
-
-    result.labelAnnotations.forEach((label: { score: any; description: any }) =>
-      obj.labels.push({
-        score: label.score,
-        description: label.description,
-      })
-    );
-    
-    logo.logoAnnotations.forEach((logo: { description: any; score: any }) =>
-      obj.brands.push({
-        description: logo.description,
-        score: logo.score,
-      })
-    );
+  interface output {
+    labels: insight[];
+    brands: insight[];
   }
-  return obj;
-};
 
-const getBatchImage = async (imageRequest:any[]) => {
+  interface insight {
+    description: string;
+    score: number;
+  }
 
-  const outputUri: string = "";
-
-  // Set where to store the results for the images that will be annotated.
-  const outputConfig = {
-    gcsDestination: {
-      uri: outputUri,
-    },
-    batchSize: 2, // max number of responses to output in each JSON file
+  const result: output = {
+    labels: [],
+    brands: [],
   };
 
-  // Add each image request object to the batch request and add the output config.
-  const request = {
-    requests: imageRequest,
-    outputConfig,
-  };
+  const objArray = await Promise.all(
+    newArr.map((el) => {
+      return new Promise(async (resolve, reject) => {
+        const obj: output = {
+          labels: [],
+          brands: [],
+        };
 
-  // Make the asynchronous batch request.
-  const [operation] = await client.asyncBatchAnnotateImages(request);
+        let [result] = await client.labelDetection(el.media_url);
+        let [logo] = await client.logoDetection(el.media_url);
 
-  // Wait for the operation to complete
-  const [filesResponse] = await operation.promise();
+        result.labelAnnotations.forEach(
+          (label: { score: number; description: string }) =>
+            obj.labels.push({
+              score: label.score,
+              description: label.description,
+            })
+        );
 
-  // The output is written to GCS with the provided output_uri as prefix
-  const destinationUri = filesResponse.outputConfig.gcsDestination.uri;
-  console.log(`Output written to GCS with prefix: ${destinationUri}`);
+        logo.logoAnnotations.forEach(
+          (logo: { description: string; score: number }) =>
+            obj.brands.push({
+              description: logo.description,
+              score: logo.score,
+            })
+        );
+
+        resolve(obj);
+      });
+    })
+  );
+
+  // get object of arrays
+  objArray.forEach((obj: { labels: any; brands: any }) => {
+    result.labels.push(...obj.labels);
+    result.brands.push(...obj.brands);
+  });
+
+  const newLabel = distinct(result.labels, "description")
+    .sort((a: { score: number; }, b: { score: number; }) => {
+      return b.score - a.score;
+    })
+    .filter((el: { description: string; }) => {
+      return el.description !== "null" || typeof el !== "undefined";
+    });
+
+  const newBrands = distinct(result.brands, "description")
+    .sort((a: { score: number; }, b: { score: number; }) => {
+      return b.score - a.score;
+    })
+    .filter((el: { description: string; }) => {
+      return el.description !== "null" || typeof el !== "undefined";
+    })
+
+  result.labels = helper.getMaxTags(newLabel, 5);
+
+  result.brands = helper.getMaxTags(newBrands, 5);
+
+  return result;
 };
 
 module.exports = {
   getProfile,
   getImageInsights,
-  getBatchImage,
+  distinct,
 };

@@ -1,52 +1,68 @@
 <template>
   <div class="profile">
-    <article class="main">
+    <article class="main" v-if="profileDataIsLoaded">
       <section>
-        <article class="media" style="background-color: blue">
-          <div class="col-0">
-            <figure class="image is-64x64">
-              Picture
-              <!-- <img :src="user.profile_pic_url" alt="Image">  -->
-              <p>
-                <strong>full name</strong>
-                <br />
-                <small>name </small>
-              </p>
+        <article class="media-top">
+          <div class="col-0" style="margin-bottom: 110px">
+            <figure class="image is-64x64 upwards">
+              <img
+                :src="profileData.profile_pic_url"
+                alt="Image"
+                style="width: 130px"
+              />
+              <br />
+              <strong>{{ profileData.full_name }}</strong>
+              <div>
+                <small style="">@{{ profileData.name }} </small>
+              </div>
             </figure>
           </div>
         </article>
       </section>
 
       <section>
-        <article class="media" style="background-color: green">
+        <article class="media">
           <div class="col-1">
             <figure>
-             <img src="../assets/following.png" alt="followings"> 
-              <strong>following</strong>
+              <img src="../assets/following.png" alt="followings" />
+              <br />
+              <strong>{{ profileData.follows_count }}</strong>
               <br />
               <span class="others">Following</span>
             </figure>
           </div>
           <div class="col-2">
             <figure>
-             <img src="../assets/following.png" alt="followers">
-              <strong>followers</strong>
+              <img src="../assets/following.png" alt="followers" />
+              <br />
+              <strong>{{ profileData.followers_count }}</strong>
               <br />
               <span class="others">Followers</span>
             </figure>
           </div>
-          <div class="col-3">
+          <div class="col-3" v-if="profileData.media.length !== 0">
             <figure>
-              <img src="../assets/heart.png" alt="likes">
-              <strong>Average likes</strong>
+              <img src="../assets/heart.png" alt="likes" />
+              <br />
+              <strong>{{
+                Math.round((profileData.average_likes + Number.EPSILON) * 100) /
+                  100
+              }}</strong>
               <br />
               <span class="others">Average Likes</span>
             </figure>
           </div>
-          <div class="col-4">
+          <div class="col-4" v-if="profileData.media.length !== 0">
             <figure>
-             <img src="../assets/engage.png" alt="engagement">
-              <strong> engagement rate</strong>
+              <img src="../assets/engage.png" alt="engagement" />
+              <br />
+              <strong>
+                ({{
+                  (
+                    profileData.engagement / profileData.followers_count
+                  ).toFixed(2)
+                }})%</strong
+              >
               <br />
               <span class="others">Engagement Rate</span>
             </figure>
@@ -57,42 +73,105 @@
       <section>
         <article class="media" style="background-color: white">
           <div class="col-5">
-            <div class="tags" style="padding: 17px, padding-bottom: 0px;">Popular #hashtags and @mentions</div>
-            <br />
-            <span style="padding-left: 10px;"
-              >unchanged. It was popularised in the 1960s with the release of
-              Letraset sheets containing Lorem Ipsum passages, and more recently
-              with desktop publishing software like Aldus PageMaker including
-              versions of Lorem Ipsum</span
+            <div
+              class="tags"
+              style="padding: 17px, padding-bottom: 0px; margin: 2px;
+    margin-left: 12px;"
             >
+              Popular #hashtags and @mentions
+            </div>
+            <br />
+            <div
+              style="margin-left: 15px"
+              v-if="profileData.media.length !== 0"
+            >
+              <span
+                class="tag-words"
+                style="padding-left: 10px;"
+                v-for="hashtag in profileData.popular_tags.hashtag"
+                :key="hashtag.tag"
+              >
+                {{ hashtag.tag }}
+              </span>
+              <br />
+              <br />
+              <span
+                class="tag-words"
+                style="padding-left: 10px;"
+                v-for="mention in profileData.popular_tags.mention"
+                :key="mention.tag"
+              >
+                {{ mention.tag }}
+              </span>
+            </div>
           </div>
         </article>
       </section>
 
       <section>
-        <article class="media" style="background-color: orange">
+        <article class="media" style="    grid-auto-columns: 1fr;">
           <div class="col-6">
             <div class="tags">brand affinity</div>
             <br />
-            <div class="insights">
-              <div class="left">
-                <span>description</span>
-              </div>
-              <div class="right">
-                <small>score</small>
+            <div class="insights" v-if="profileData.media.length !== 0">
+              <div class="table">
+                <div class="left">
+                  <span
+                    class=""
+                    style=""
+                    v-for="brand in profileData.insights.brands"
+                    :key="brand._id"
+                  >
+                    {{ brand.description }}
+                    <br />
+                    <br />
+                  </span>
+                </div>
+                <div class="right">
+                  <span
+                    class=""
+                    style=""
+                    v-for="brand in profileData.insights.brands"
+                    :key="brand._id"
+                  >
+                    {{ Math.round((brand.score + Number.EPSILON) * 100) }}%
+                    <br />
+                    <br />
+                  </span>
+                </div>
               </div>
             </div>
           </div>
 
           <div class="col-7">
-            <div class="tags" >Interests</div>
+            <div class="tags">Interests</div>
             <br />
-            <div class="insights">
-              <div class="left">
-                <span>description</span>
-              </div>
-              <div class="right">
-                <small>score</small>
+            <div class="insights" v-if="profileData.media.length !== 0">
+              <div class="table">
+                <div class="left">
+                  <span
+                    class=""
+                    style=""
+                    v-for="label in profileData.insights.labels"
+                    :key="label._id"
+                  >
+                    {{ label.description }}
+                    <br />
+                    <br />
+                  </span>
+                </div>
+                <div class="right">
+                  <span
+                    class=""
+                    style=""
+                    v-for="label in profileData.insights.labels"
+                    :key="label._id"
+                  >
+                    {{ Math.round((label.score + Number.EPSILON) * 100) }}%
+                    <br />
+                    <br />
+                  </span>
+                </div>
               </div>
             </div>
           </div>
@@ -100,78 +179,53 @@
       </section>
 
       <section>
-        <article style="background-color: purple">
+        <article >
           <strong style="padding:17px">Latest Post</strong>
 
-          <div class="media">
-            <div class="col-8">
-              <div class="row">
-                <div class="row-top">
-                  <small> timestamp</small>
+          <div class="media" v-if="profileData.media.length !== 0">
+            <div
+              class="col-8"
+              v-for="media in profileData.media"
+              :key="media._id"
+            >
+              <div class="row" v-if="media.media_url">
+                <div class="row-top right">
+                  <span> {{ formatTimeStamp(media.timestamp) }}</span>
                 </div>
                 <div class="row-mid">
-                  picture
-                  <!-- <img :src="user.profile_pic_url" alt="Image"> -->
+                  <img :src="media.media_url" alt="Image" class="media-pic" />
                 </div>
 
                 <div class="row-bottom">
-                  <div class="media-perks">
+                  <div class="media-perks" v-if="media.video_view_count">                  
+                    <div class="video"  >
+                        <img src="../assets/video.png" alt="likes" />
+                      <span>{{ media.video_view_count }}</span>                   
+                      </div>
                     <div class="likes">
-                      <span>likes</span>
+                        <img src="../assets/heart.png" alt="likes" />
+                      <span>{{ media.like_count }}</span>
                     </div>
                     <div class="comments">
-                      <span>comments</span>
+                        <img src="../assets/comment.png" alt="likes" />
+                      <span>{{ media.comments_count }}</span>
+                    </div>
+                  </div>                  
+                 <div class="media-perks" v-if="!media.video_view_count">                  
+                    <div class="no-vid-likes">
+                        <img src="../assets/heart.png" alt="likes" />
+                      <span>{{ media.like_count }}</span>
+                    </div>
+                    <div class="no-vid-comments">
+                        <img src="../assets/comment.png" alt="likes" />
+                      <span>{{ media.comments_count }}</span>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-
-            <div class="col-9">
-              <div class="row">
-                <div class="row-top">
-                  <small> timestamp</small>
-                </div>
-                <div class="row-mid">
-                  picture
-                  <!-- <img :src="user.profile_pic_url" alt="Image"> -->
-                </div>
-
-                <div class="row-bottom">
-                  <div class="media-perks">
-                    <div class="likes">
-                      <span>likes</span>
-                    </div>
-                    <div class="comments">
-                      <span>comments</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div class="col-10">
-              <div class="row">
-                <div class="row-top">
-                  <small> timestamp</small>
-                </div>
-                <div class="row-mid">
-                  picture
-                  <!-- <img :src="user.profile_pic_url" alt="Image"> -->
-                </div>
-
-                <div class="row-bottom">
-                  <div class="media-perks">
-                    <div class="likes">
-                      <span>likes</span>
-                    </div>
-                    <div class="comments">
-                      <span>comments</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+            <div class="col-9"></div>
+            <div class="col-10"></div>
           </div>
         </article>
       </section>
@@ -180,14 +234,35 @@
 </template>
 
 <script>
-// import { mapGetters, mapActions } from "vuex";
+import config from "../config/config";
+import axios from "axios";
+ import moment  from 'moment';
 
 export default {
   name: "Profile",
-  methods: {},
-  // computed: mapGetters(['users']),
-  created() {
-    // this.fetchUsers()
+  data() {
+    return {
+      username: this.$route.params.username,
+      profileData: {},
+      profileDataIsLoaded: false,
+    };
+  },
+
+  methods: {
+    loadProfileData(username) {
+      axios
+        .get(`${config.BASE_URL}/api/v1/profile?name=${username}`)
+        .then((user) => {
+          this.profileData = user.data;
+          this.profileDataIsLoaded = true;
+        });
+    },   
+ formatTimeStamp(timestamp) {
+ return moment.unix(timestamp).format('MMMM D, YYYY');
+}
+  },
+  mounted() {
+    this.loadProfileData(this.username);
   },
 };
 </script>
@@ -206,6 +281,19 @@ export default {
   margin-top: 10px;
 }
 
+.upwards {
+  margin: -60px;
+}
+
+.tag-words {
+  background: #114b5f;
+  border-radius: 33px;
+  color: white;
+  padding: 3px;
+  margin: 3px;
+  margin-bottom: 2px;
+}
+
 article {
   padding: 0em;
 }
@@ -214,6 +302,20 @@ article {
   display: grid;
   grid-gap: 10px;
   align-items: center;
+  border: 1px solid #eeeeee;
+  box-sizing: border-box;
+  box-shadow: 2px 2px 8px #eeeeee;
+}
+.media-top {
+  display: grid;
+  grid-gap: 10px;
+  align-items: center;
+}
+
+.table {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }
 
 figure {
@@ -222,6 +324,9 @@ figure {
   flex-direction: column;
 }
 
+section {
+  margin-bottom: 20px;
+}
 .media .col-0 {
 }
 
@@ -240,13 +345,15 @@ figure {
 }
 .media .col-5 {
   width: 60%;
+  margin-bottom: 20px;
 }
 .media .col-6 {
   grid-column: 1/2;
-  border: 1px solid #eeeeee;
+  /* border: 1px solid #eeeeee; */
   box-sizing: border-box;
-  box-shadow: 2px 2px 8px #eeeeee;
+  /* box-shadow: 2px 2px 8px #eeeeee; */
   padding: 15px;
+  margin-bottom: 81px;
 }
 .media .col-7 {
   grid-column: 2/3;
@@ -264,14 +371,24 @@ figure {
 .media .col-10 {
   grid-column: 3/4;
 }
+.media-pic {
+    height: 350px;
+    width: 350px;
+    border-radius: 0px;
+}
 .insights {
   display: grid;
 }
 .left {
-  grid-column: 1/2;
+  display: flex;
+  flex-direction: column;
 }
 .right {
-  grid-column: 2/3;
+  display: flex;
+  flex-direction: column;
+  font-size: 14px;
+  line-height: 18px;
+  color: #757575;
 }
 .row {
   display: grid;
@@ -283,6 +400,10 @@ figure {
 }
 .row-mid {
   grid-row: 2/3;
+  background: #FFFFFF;
+border: 1px solid #EEEEEE;
+box-sizing: border-box;
+box-shadow: 2px 2px 8px #EEEEEE;
 }
 .row-bottom {
   grid-row: 3/4;
@@ -291,11 +412,20 @@ figure {
   display: grid;
   grid-gap: 0px;
 }
+.video{
+    grid-column:1/2
+}
 .likes {
-  grid-column: 1/2;
+  grid-column: 2/3;
 }
 .comments {
-  grid-column: 2/3;
+  grid-column: 3/4;
+}
+.no-vid-likes{
+    grid-column: 1/2
+}
+.no-vid-comments{
+    grid-column: 2/3
 }
 img {
   border-radius: 171px;
@@ -316,7 +446,7 @@ div .tags {
   font-size: 20px;
   line-height: 25px;
   font-weight: bold;
-  padding: 5px; 
+  padding: 5px;
 }
 
 span .others {

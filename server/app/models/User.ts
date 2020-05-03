@@ -56,11 +56,12 @@ var userSchema = new Schema({
   media: [
     {
       media_url: String,
-      timestamp: Date,
+      timestamp: String,
       comments_count: Number,
       like_count: Number,
       MediaEngagement:Number,
       caption:String,
+      video_view_count :Number,
       id: String,
     },
   ],
@@ -70,14 +71,14 @@ var userSchema = new Schema({
       labels: [
         {
           description: String,
-          score: String
+          score: Number
         }
        
       ],
       brands: [
         {
           description: String,
-          score: String
+          score: Number
         }
       ],
     

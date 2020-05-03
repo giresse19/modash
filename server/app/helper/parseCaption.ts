@@ -2,37 +2,94 @@ const parseCaption = async (array: any[]) => {
   const newArray = [...array];
 
   interface output {
-    tags: any;
+    hashtag: any;
+    mention: any;
   }
 
   const result: output = {
-    tags: [],
+    hashtag: [],
+    mention: [],
+  };
+
+  const newResult: any = {
+    mergedHashtags: [],
+    mergedMentions: [],
   };
 
   const hash: any = /\B#[a-z][a-z0-9._-]*\b/gi;
-  const mention: any = /\B@[a-z][a-z0-9._-]*\b/gi;
+  const ment: any = /\B@[a-z][a-z0-9._-]*\b/gi;
 
   for (let el of newArray) {
-    result.tags.push(el.caption.match(hash), el.caption.match(mention));
+    result.hashtag.push(el.caption.match(hash));
+    result.mention.push(el.caption.match(ment));
   }
-  const merged = [].concat(...result.tags);
-  return merged;
+  newResult.mergedHashtags = [].concat(...result.hashtag);
+  newResult.mergedMentions = [].concat(...result.mention);
+  return newResult;
 };
 
-const captionMode = async (array:  any[]) => {
-  const newArr = await parseCaption([...array]);
+const getObjectFromArray = (array: any, obj: any) => {
+  const newArr = [...array];
+  const newObj = { ...obj };
+  const result: any = [];
 
-  if (newArr.length == 0) return null;
-  const popular_tags = {};
   for (let i = 0; i < newArr.length; i++) {
-    let el = newArr[i] !== null ? newArr[i].replace(/\./g, '') : null;
-    if (popular_tags[el] == null) popular_tags[el] = 1;
-    else popular_tags[el]++;
+    let el = newArr[i] !== null ? newArr[i].replace(/\./g, "") : null;
+    if (newObj[el] == null) newObj[el] = 1;
+    else newObj[el]++;
   }
-  return popular_tags;
+
+  for (let el in newObj) {
+    result.push({
+      tag: el,
+      count: newObj[el],
+    });
+  }
+  return result;
+};
+
+const getMaxTags = function (item: string | any[], max: number) {
+  const result: any = [];
+  for (let i = 0; i < max && i < item.length; i++ ) {
+    result.push(item[i])
+  }
+  return result
+}
+
+
+const captionMode = async (array: any[]) => {
+  const { mergedHashtags, mergedMentions } = await parseCaption([...array]);
+
+  const result: any = {
+    hashtag: [],
+    mention: [],
+  };
+
+  if (mergedHashtags.length == 0) return null;
+  const popular_tags = {};
+
+  result.hashtag = getObjectFromArray(mergedHashtags, popular_tags);
+  result.mention = getObjectFromArray(mergedMentions, popular_tags);
+
+  const newHash = result.hashtag.sort((a: { count: number; }, b: { count: number; }) => {
+    return b.count - a.count;
+  }).filter((el: any) => {  return el.tag !== 'null' });
+
+  const newMention = result.mention.sort((a: { count: number; }, b: { count: number; }) => {
+    return b.count - a.count;
+  }).filter((el: any) => {  return el.tag !== 'null' });
+
+  result.hashtag = getMaxTags(newHash, 5);
+
+  result.mention = getMaxTags(newMention, 5);
+
+
+  
+  return result;
 };
 
 module.exports = {
   captionMode,
   parseCaption,
+  getMaxTags,
 };

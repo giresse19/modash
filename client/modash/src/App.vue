@@ -13,19 +13,19 @@ export default {
   name: 'App',
   components: {
     Header,
-
   }
 }
 </script>
 
 <style>
-img {
-    display: block; 
-    max-width: 100%;
-}
+
 header, h1, h2, h3, h4, h5, h6 {
     font-family: 'Source Sans Pro', sans-serif;
     font-weight: 500;
+}
+header img {
+    display: block; 
+    max-width: 100%;
 }
 #app {
   font-family: "Open Sans", Arial, Helvetica, sans-serif;

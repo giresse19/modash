@@ -2,7 +2,7 @@
       <header>
         <div class="row">
             <div class="logo">                
-                <img alt="Modash logo" src="../assets/logo.png">
+               <a href="/"> <img alt="Modash logo" src="../assets/logo.png" ></a>
             </div>
         </div>      
     </header>
@@ -41,6 +41,10 @@ header .row {
       header, main {
           border: none;
           margin: 0;
+          margin-bottom: 80px;          
+      }
+      .logo{
+        cursor: pointer;
       }
  }
 
