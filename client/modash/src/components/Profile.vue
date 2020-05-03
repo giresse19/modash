@@ -74,15 +74,13 @@
         <article class="media" style="background-color: white">
           <div class="col-5">
             <div
-              class="tags"
-              style="padding: 17px, padding-bottom: 0px; margin: 2px;
-    margin-left: 12px;"
+              class="tags hashtags"            
             >
               Popular #hashtags and @mentions
             </div>
             <br />
             <div
-              style="margin-left: 15px"
+              style="margin-left: 15px;  margin-bottom: 14px;"
               v-if="profileData.media.length !== 0"
             >
               <span
@@ -180,7 +178,7 @@
 
       <section>
         <article >
-          <strong style="padding:17px">Latest Post</strong>
+          <strong style="padding:40px">Latest Post</strong>
 
           <div class="media" v-if="profileData.media.length !== 0">
             <div
@@ -302,9 +300,7 @@ article {
   display: grid;
   grid-gap: 10px;
   align-items: center;
-  border: 1px solid #eeeeee;
-  box-sizing: border-box;
-  box-shadow: 2px 2px 8px #eeeeee;
+  margin: 15px;
 }
 .media-top {
   display: grid;
@@ -327,31 +323,44 @@ figure {
 section {
   margin-bottom: 20px;
 }
-.media .col-0 {
-}
 
 .media .col-1 {
   grid-column: 1/2;
+  border: 1px solid #eeeeee;
+  box-sizing: border-box;
+  box-shadow: 2px 2px 8px #eeeeee;
 }
 
 .media .col-2 {
   grid-column: 2/3;
+  border: 1px solid #eeeeee;
+  box-sizing: border-box;
+  box-shadow: 2px 2px 8px #eeeeee;
 }
 .media .col-3 {
   grid-column: 3/4;
+  border: 1px solid #eeeeee;
+  box-sizing: border-box;
+  box-shadow: 2px 2px 8px #eeeeee;
 }
 .media .col-4 {
   grid-column: 4/5;
+  border: 1px solid #eeeeee;
+  box-sizing: border-box;
+  box-shadow: 2px 2px 8px #eeeeee;
 }
 .media .col-5 {
-  width: 60%;
+  width: 100%;
   margin-bottom: 20px;
+    border: 1px solid #eeeeee;
+  box-sizing: border-box;
+  box-shadow: 2px 2px 8px #eeeeee;
 }
 .media .col-6 {
   grid-column: 1/2;
-  /* border: 1px solid #eeeeee; */
+  border: 1px solid #eeeeee;
   box-sizing: border-box;
-  /* box-shadow: 2px 2px 8px #eeeeee; */
+  box-shadow: 2px 2px 8px #eeeeee;
   padding: 15px;
   margin-bottom: 81px;
 }
@@ -361,9 +370,13 @@ section {
   box-sizing: border-box;
   box-shadow: 2px 2px 8px #eeeeee;
   padding: 15px;
+
 }
 ˇ .media .col-8 {
   grid-column: 1/2;
+      border: 1px solid #eeeeee;
+  box-sizing: border-box;
+  box-shadow: 2px 2px 8px #eeeeee;
 }
 .media .col-9 {
   grid-column: 2/3;
@@ -420,6 +433,12 @@ box-shadow: 2px 2px 8px #EEEEEE;
 }
 .comments {
   grid-column: 3/4;
+}
+.hashtags{
+padding: 17px;
+ padding-bottom: 0px; 
+ margin: 2px;
+ margin-left: 12px;
 }
 .no-vid-likes{
     grid-column: 1/2
