@@ -1,7 +1,7 @@
 #Instagram scraping app
 Simple Node.js/MongoDb and Vue.js app which scrapes and analyze instagram(IG) professional accounts.
 
-## Building and running locally
+## Building and running locally:
 
 To run this locally, you need Node.js > 8, a mongoDB cloud instance using atlas and a google service account.
 
@@ -22,6 +22,10 @@ key instead of a service account.
 
  - Also enable the Google Vision API for the google project you created.
 
+ - Remember that step (2), ONLY works in the current session of the terminal. That is, if you set the google application
+ credentials on terminal window and later closs that particular terminal window, you will need to run it again int the new
+ terminal.Inorder to access the API.
+
 Clone the repository, install required packages via `npm install` or `yarn install` then run `npm start`. Example commands are below:
 
 ```sh
@@ -32,9 +36,16 @@ git clone https://github.com/giresse19/modash.git
 Back-end:
 ```sh
 cd modash/server
-$ sudo docker-compose up — build 
-* App should be  exposed at http://localhost:3000 and connected with mongoDB(via mongoDB atlas)
+$ npm install 
 ```
+* App should be  exposed at http://localhost:3000 and connected with mongoDB(via mongoDB atlas)
+
+* windows users, if you're getting this annoying npm error:
+ *openssl config failed: error:02001002:system library:fopen:No such file or directory*
+
+ Please check the link below for a fix:
+ -  https://github.com/npm/npm/issues/17261
+
 
 | Purpose | URL
 | - | -
@@ -118,11 +129,8 @@ front-end:
 cd modash/client/modash
 $ npm install
 $ npm run serve 
-* App should run on port http://localhost:8080
 ```
-### src/Header/Profile.vue
-* Logic, template and style for an `user` profile is found here.
-*   
+* Navigate to: http://localhost:8080 to view app
 
 ### src/components/Profile.vue
 * Logic, template and style for an `user` profile is found here.
