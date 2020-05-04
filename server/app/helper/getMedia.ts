@@ -1,4 +1,3 @@
-
 const getMedia = (array: any[]) => {
   const newArray = [...array];
 
@@ -8,9 +7,9 @@ const getMedia = (array: any[]) => {
     comments_count: number;
     like_count: number;
     MediaEngagement: number;
-    video_view_count: number,
+    video_view_count: number;
     id: string;
-    caption: string,
+    caption: string;
     children: any[];
   }
 
@@ -18,7 +17,7 @@ const getMedia = (array: any[]) => {
     media: any[];
     engagement: number;
     total_likes: number;
-    like_count: number
+    like_count: number;
   }
 
   const result: output = {
@@ -37,19 +36,18 @@ const getMedia = (array: any[]) => {
       MediaEngagement: 0,
       video_view_count: 0,
       id: "",
-      caption: '',
+      caption: "",
       children: [],
-
     };
 
     obj.media_url = el.node.display_url;
-    obj.timestamp = el.node.taken_at_timestamp; 
+    obj.timestamp = el.node.taken_at_timestamp;
     obj.comments_count = el.node.edge_media_to_comment.count;
     obj.like_count = el.node.edge_liked_by.count;
     obj.MediaEngagement = obj.comments_count + obj.like_count;
     obj.id = el.node.id;
-    obj.caption = el.node.edge_media_to_caption.edges[0].node.text
-if(el.node.is_video) obj.video_view_count = el.node.video_view_count
+    obj.caption = el.node.edge_media_to_caption.edges[0].node.text;
+    if (el.node.is_video) obj.video_view_count = el.node.video_view_count;
     // Since, generally speaking number of media item isn't same as number of like count,
     // we need to count actual number of likes
     if (obj.like_count > 0) result.like_count = result.like_count + 1;

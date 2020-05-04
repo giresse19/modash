@@ -94,20 +94,12 @@ const getImageInsights = async (array: any) => {
   });
 
   const newLabel = distinct(result.labels, "description")
-    .sort((a: { score: number; }, b: { score: number; }) => {
-      return b.score - a.score;
-    })
-    .filter((el: { description: string; }) => {
-      return el.description !== "null" || typeof el !== "undefined";
-    });
+    .sort((a: { score: number; }, b: { score: number; }) =>  b.score - a.score)
+    .filter((el: { description: string; }) => el.description !== "null" || typeof el !== "undefined");
 
   const newBrands = distinct(result.brands, "description")
-    .sort((a: { score: number; }, b: { score: number; }) => {
-      return b.score - a.score;
-    })
-    .filter((el: { description: string; }) => {
-      return el.description !== "null" || typeof el !== "undefined";
-    })
+    .sort((a: { score: number; }, b: { score: number; }) => b.score - a.score)
+    .filter((el: { description: string; }) => el.description !== "null" || typeof el !== "undefined")
 
   result.labels = helper.getMaxTags(newLabel, 5);
 

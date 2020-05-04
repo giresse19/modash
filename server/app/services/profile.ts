@@ -39,15 +39,12 @@ module.exports = {
       );
    
       const insights = await helper.getImageInsights(media);
-
-      console.log("insights", insights)
     
       // get average likes
       const average_likes = like_count !== 0 ? total_likes / like_count : 0;
 
       const popular_tags = await caption.captionMode(media);
-      console.log("popular tags", popular_tags)
-
+    
       const userProfile = await User.findOne({ name });
 
       // remove old user in DB, inorder to update with newly fetch/scraped result from instagram API.

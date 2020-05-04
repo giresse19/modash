@@ -22,10 +22,10 @@ export default {
 
 /* Mobile first design */
 header {
-    border-bottom: 4px solid #9EA9C1;
+    border-bottom: 0px solid #9EA9C1;
 }
 main {
-  border-top: 2px solid #dddddd;
+  border-top: 0px solid #dddddd;
   margin-top: 0.5rem;
 }
 header .row {

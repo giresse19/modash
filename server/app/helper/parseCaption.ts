@@ -50,12 +50,11 @@ const getObjectFromArray = (array: any, obj: any) => {
 
 const getMaxTags = function (item: string | any[], max: number) {
   const result: any = [];
-  for (let i = 0; i < max && i < item.length; i++ ) {
-    result.push(item[i])
+  for (let i = 0; i < max && i < item.length; i++) {
+    result.push(item[i]);
   }
-  return result
-}
-
+  return result;
+};
 
 const captionMode = async (array: any[]) => {
   const { mergedHashtags, mergedMentions } = await parseCaption([...array]);
@@ -71,20 +70,18 @@ const captionMode = async (array: any[]) => {
   result.hashtag = getObjectFromArray(mergedHashtags, popular_tags);
   result.mention = getObjectFromArray(mergedMentions, popular_tags);
 
-  const newHash = result.hashtag.sort((a: { count: number; }, b: { count: number; }) => {
-    return b.count - a.count;
-  }).filter((el: any) => {  return el.tag !== 'null' });
+  const newHash = result.hashtag
+    .sort((a: { count: number }, b: { count: number }) => b.count - a.count)
+    .filter((el: any) => el.tag !== "null");
 
-  const newMention = result.mention.sort((a: { count: number; }, b: { count: number; }) => {
-    return b.count - a.count;
-  }).filter((el: any) => {  return el.tag !== 'null' });
+  const newMention = result.mention
+    .sort((a: { count: number }, b: { count: number }) => b.count - a.count)
+    .filter((el: any) => el.tag !== "null");
 
   result.hashtag = getMaxTags(newHash, 5);
 
   result.mention = getMaxTags(newMention, 5);
 
-
-  
   return result;
 };
 
