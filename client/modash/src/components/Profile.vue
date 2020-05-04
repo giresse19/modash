@@ -410,7 +410,6 @@ section {
   grid-column: 3/4;
 }
 .media-pic {
-  /* 350px */
   height: 340px;
   width: 100%;
   border-radius: 0px;
