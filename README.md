@@ -31,7 +31,7 @@ git clone https://github.com/giresse19/modash.git
 ## Installation
 Back-end:
 ```sh
-cd server
+cd modash/server
 $ sudo docker-compose up — build 
 * App should be  exposed at http://localhost:3000 and connected with mongoDB(via mongoDB atlas)
 ```
@@ -115,7 +115,7 @@ inorder to get image insights from google API.
 ### installation:
 front-end:
 ```sh
-cd client/modash
+cd modash/client/modash
 $ npm install
 $ npm run serve 
 * App should run on port http://localhost:8080
