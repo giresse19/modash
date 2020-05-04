@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const { check, validationResult } = require("express-validator");
 
-const services = require("../../services/profile.ts");
+const service = require("../../services/profile.ts");
 
 // @route POST api/analyze/username
 // @desc request profile to analyze
@@ -19,7 +19,7 @@ router.post(
     const { name } = req.body;
 
     try {
-       await services.profile(req, res, name);      
+       await service.profile(req, res, name);      
     } catch (err) {
       console.error(err);
       res.status(500).send("Server Error");

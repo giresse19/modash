@@ -1,12 +1,15 @@
 <template>
   <div class="users">
-    <div
+    <div class="loader" style="width: 471px;" v-if="!isEmpty(error)">       
+        <strong>{{error.message}}</strong>
+      </div>
+    <div    
       v-for="user in users"
       :key="user._id"
       class="user"
       @click="openProfile(user.name)"
     >
-      <article class="media">
+      <article class="media" v-if="isEmpty(error)">
         <div class="col-1">
           <figure class="image is-64x64">
             <img :src="user.profile_pic_url" alt="Image" style="width: 60px" />
@@ -51,8 +54,14 @@ export default {
         params: { username },
       });
     },
+    isEmpty(obj) {
+    return Object.keys(obj).length === 0;
+},
   },
-  computed: mapGetters(["users"]),
+  computed:{
+    ...mapGetters(["users"]),
+    ...mapGetters(["error"])
+  }, 
   created() {
     this.fetchUsers();
   },

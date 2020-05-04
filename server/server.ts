@@ -1,5 +1,7 @@
 export {}; // handle block scope issue with ts
 
+process.on('uncaughtException', console.error);
+
 const config = require("./config/config.ts");
 const errorHandler = require("errorhandler");
 const app = require('./app');

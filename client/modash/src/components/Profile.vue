@@ -1,13 +1,16 @@
 <template>
-  <div class="">
+  <div>
     <div class="back-button">
       <a href="/"><img src="../assets/arrow.png" alt="followings"/></a>
-      <div class="loader" v-if="!profileDataIsLoaded">
+      <div class="loader" v-if="!profileDataIsLoaded && isEmpty(error)">
         <img height="87" width="100" src="../assets/load.svg" alt="loader" />
+      </div>
+      <div class="loader" style="width: 471px;" v-if="!isEmpty(error)">       
+        <strong>{{error.message}}</strong>
       </div>
     </div>
     <div class="profile">
-      <article class="main" v-if="profileDataIsLoaded">
+      <article class="main" v-if="profileDataIsLoaded && isEmpty(error)">
         <section>
           <article class="media-top">
             <div class="col-0" style="margin-bottom: 110px">
@@ -252,18 +255,27 @@ export default {
       username: this.$route.params.username,
       profileData: {},
       profileDataIsLoaded: false,
+      error: {},
     };
   },
 
   methods: {
-    loadProfileData(username) {
-      axios
-        .get(`${config.BASE_URL}/api/v1/profile?name=${username}`)
-        .then((user) => {
-          this.profileData = user.data;
+    async loadProfileData(username) {
+      try {
+        const user = await axios.get(
+          `${config.BASE_URL}/api/v1/profile?name=${username}`
+        );
+        if (user.status === 200) {
           this.profileDataIsLoaded = true;
-        });
+          this.profileData = user.data;          
+        }
+      } catch (error) {        
+        this.error = error.response.data;
+      }
     },
+    isEmpty(obj) {
+    return Object.keys(obj).length === 0;
+},
     formatTimeStamp(timestamp) {
       return moment.unix(timestamp).format("MMMM D, YYYY");
     },
@@ -311,16 +323,6 @@ article {
   padding: 0em;
 }
 
-.loader {
-  width: 100px;
-  height: 100px;
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  margin: auto;
-}
 
 .media {
   display: grid;

@@ -1,9 +1,10 @@
-const mongooseConnect = require('mongoose');
+export {}
+const mongoose = require('mongoose');
 const configDB = require('./config.ts');
 
 const connectDB = async () => {
     try {
-        await mongooseConnect.connect(configDB.db.uri, { 
+        await mongoose.connect(configDB.db.uri, { 
             useNewUrlParser: true, 
             useUnifiedTopology: true,
             useCreateIndex: true,

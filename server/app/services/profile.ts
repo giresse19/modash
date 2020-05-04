@@ -28,23 +28,23 @@ module.exports = {
       let followers_count = edge_followed_by.count;
       let follows_count = edge_follow.count;
 
-       const videoMedia = edge_felix_video_timeline.edges;
+      const videoMedia = edge_felix_video_timeline.edges;
 
       const { media_count, edges } = edge_owner_to_timeline_media;
 
-      const videoAndPictureMedia = videoMedia.concat(edges)
+      const videoAndPictureMedia = videoMedia.concat(edges);
 
       const { media, engagement, total_likes, like_count } = getMediaFunc(
         videoAndPictureMedia
       );
-   
+
       const insights = await helper.getImageInsights(media);
-    
+
       // get average likes
       const average_likes = like_count !== 0 ? total_likes / like_count : 0;
 
       const popular_tags = await caption.captionMode(media);
-    
+
       const userProfile = await User.findOne({ name });
 
       // remove old user in DB, inorder to update with newly fetch/scraped result from instagram API.
@@ -83,20 +83,21 @@ module.exports = {
     }
   },
 
-  getAllUsers: async (req: any, res: any) => {
+  getAllUsers: async (
+    req: any,
+    res: any,
+    callback: (arg0: { status: number; message: string }) => any
+  ) => {
     try {
       User.find({}, async (err: any, users: any[]) => {
         const userMap: any = [];
-
-        if (users.length === 0) {
-          res.json({
-            errors: [
-              {
-                msg: "No User found!",
-              },
-            ],
+        if (users.length === 0)
+          return void callback({
+            status: 400,
+            message:
+              "No IG user added! Please Add users to DB (path: /analyze/username), inorder to view list."
           });
-        }
+
         users.forEach(function (user) {
           userMap.push(user);
         });
@@ -104,27 +105,28 @@ module.exports = {
         res.json(userMap);
       });
     } catch (err) {
-      res.status(500).json({ errors: [{ msg: err }] });
+      return void callback(err);
     }
   },
 
-  getUser: async (name: string, res: any) => {
+  getUser: async (
+    name: string,
+    res: any,
+    callback: (arg0: { status: number; message: string }) => any
+  ) => {
     try {
       const user = await User.findOne({ name });
       if (user) {
         res.json(user);
       } else {
-        res.status(400).json({
-          errors: [
-            {
-              msg:
-                "User dont exist in DB! Please enter user via the /analyze/username end-point",
-            },
-          ],
+        return void callback({
+          status: 400,
+          message:
+            "User dont exist in DB! Please enter user via the /analyze/username end-point",
         });
       }
     } catch (err) {
-      res.status(500).json({ errors: [{ msg: err }] });
+      return void callback(err);
     }
   },
 };
