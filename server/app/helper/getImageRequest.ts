@@ -1,7 +1,7 @@
 const vision = require("@google-cloud/vision");
 const IgConfig = require("../../config/config.ts");
 const axios = require("axios");
-const helper = require("./parseCaption");
+const helperFunc = require("./parseCaption");
 
 // Instantiates a client
 const client = new vision.ImageAnnotatorClient();
@@ -107,9 +107,9 @@ const getImageInsights = async (array: any) => {
         el.description !== "null" || typeof el !== "undefined"
     );
 
-  result.labels = helper.getMaxTags(newLabel, 5);
+  result.labels = helperFunc.getMaxTags(newLabel, 5);
 
-  result.brands = helper.getMaxTags(newBrands, 5);
+  result.brands = helperFunc.getMaxTags(newBrands, 5);
 
   return result;
 };

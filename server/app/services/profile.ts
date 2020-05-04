@@ -1,4 +1,3 @@
-export {};
 const getMediaFunc = require("../helper/getMedia.ts");
 const helper = require("../helper/getImageRequest.ts");
 
