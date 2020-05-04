@@ -3,9 +3,19 @@ Simple Node.js/MongoDb and Vue.js app which scrapes and analyze instagram(IG) pr
 
 ## Building and running locally
 
-To run this locally, you need Node.js > 8 and a google service account.
-The purpose of the google service account is to be able to access google vision API, which advises against using an API
+To run this locally, you need Node.js > 8, a mongoDB cloud instance using atlas and a google service account.
+
+## Get mongoDb atlas instance:
+* You can get MongoDB atlas account from here: 
+  - https://cloud.mongodb.com/v2/5ea07fec9dae766e6eb7205f#metrics/replicaSet/5ea08375d1169842708bdf44/explorer.
+
+  - get a database user's name and password and insert those in the `./config/config.ts` file in the 
+  `db_user` and `db_password` respectively.
+
+## Get a google service account with enabled API:
+* The purpose of the google service account is to be able to access google vision API, which advises against using an API
 key instead of a service account. 
+
  * Please follow the link below and perform *ONLY*  steps (1) and (2):
 
  - https://cloud.google.com/natural-language/docs/quickstart-client-libraries#client-libraries-install-nodejs
