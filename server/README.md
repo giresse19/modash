@@ -6,10 +6,10 @@ Simple Node.js/MongoDb and Vue.js app which scrapes and analyze instagram(IG) pr
 To run this locally, you need Node.js > 8, a mongoDB cloud instance using atlas and a google service account.
 
 ## Get mongoDb atlas instance:
-* You can get MongoDB atlas account from here: 
+* Set MongoDB atlas instance from here: 
   - https://cloud.mongodb.com/v2/5ea07fec9dae766e6eb7205f#metrics/replicaSet/5ea08375d1169842708bdf44/explorer.
 
-  - get a database user's name and password and insert those in the `./config/config.ts` file in the 
+  - get a database user's name and password and insert those on the `./config/config.ts` file in the variables
   `db_user` and `db_password` respectively.
 
 ## Get a google service account with enabled API:
@@ -117,8 +117,11 @@ $ npm install
 $ npm run serve 
 * App should run on port http://localhost:8080
 ```
-### Profile.vue
+### src/Header/Profile.vue
+* Logic, template and style for an `user` profile is found here.
+*   
+
+### src/components/Profile.vue
 * Logic, template and style for an `user` profile is found here.
 * Displays an SVG loading animation when data is being fetched.
 * Displays an error message to the UI, upon failure, while fetching a `user`.  
-* 
