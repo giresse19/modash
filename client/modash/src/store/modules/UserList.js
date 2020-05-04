@@ -13,8 +13,7 @@ const actions = {
   async fetchUsers({ commit }) {
     const response = await axios.get(`${config.BASE_URL}/api/v1/all`);
     commit("setUsers", response.data);
-  }, 
-    
+  },
 };
 
 const mutations = {

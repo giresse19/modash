@@ -1,10 +1,10 @@
 <template>
   <div class="">
     <div class="back-button">
-      <a href="/"><img src="../assets/arrow.png" alt="followings"/></a>     
+      <a href="/"><img src="../assets/arrow.png" alt="followings"/></a>
       <div class="loader" v-if="!profileDataIsLoaded">
-          <img height="87" width="100" src="../assets/load.svg" alt="loader" /> 
-      </div>      
+        <img height="87" width="100" src="../assets/load.svg" alt="loader" />
+      </div>
     </div>
     <div class="profile">
       <article class="main" v-if="profileDataIsLoaded">
@@ -312,14 +312,14 @@ article {
 }
 
 .loader {
-    width: 100px;
-	height: 100px;	
-	position: absolute;
-	top:0;
-	bottom: 0;
-	left: 0;
-	right: 0;  	
-	margin: auto;
+  width: 100px;
+  height: 100px;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
 }
 
 .media {

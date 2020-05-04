@@ -48,7 +48,7 @@ export default {
     openProfile(username) {
       this.$router.push({
         name: "profile",
-        params: {username} 
+        params: { username },
       });
     },
   },
