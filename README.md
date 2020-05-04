@@ -85,7 +85,9 @@ $ sudo docker-compose up — build
 
 ### config/db.ts
 * Config for mongoDB atlas is found here
-* Contains all global configurations and variables used in the App here too
+* Contains all global configurations and variables used in the App here too.
+* get a database user's name and password and insert in the variables
+  `db_user` and `db_password` respectively.
 
 ### app/helper/getImageRequest.ts
 * Utility methods to fetch data from instagram with instagram `username`, get insights with media
@@ -101,6 +103,7 @@ inorder to get image insights from google API.
 
 ### app/routes/getUsername.ts
 * Contains endpoint for accepting HTTP POST IG `username` and calls the `service.profile` method in the servie inorder to store user profile to DB.
+* Validate's username entered and return an error is name is missing in query params.
 
 ### app/services/profile.ts
 * Main App logic is here
