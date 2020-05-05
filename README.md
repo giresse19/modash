@@ -134,6 +134,14 @@ $ npm run serve
 ```
 * Navigate to: http://localhost:8080 to view app
 
+### Root files
+
+| File | Comment
+| - | -
+| `.babel.config.js` | babel configurations defined here.
+| `.gitignore` | Ignoring node_modules
+| `package.json` | NPM data including node and npm engine versions
+
 ### src/components/Header.vue
 * Logic, template and style for header component is found here.
 * Header component is found on every other page.
