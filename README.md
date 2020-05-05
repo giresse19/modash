@@ -134,7 +134,40 @@ $ npm run serve
 ```
 * Navigate to: http://localhost:8080 to view app
 
+### src/components/Header.vue
+* Logic, template and style for header component is found here.
+* Header component is found on every other page.
+
+### src/components/UserList.vue
+* Template and style for `users list` is found here.
+* Displays a message when no User has been added in the DB.
+* Imports user list state from store.
+* Fires `fetchUsers` action upon creation.
+
 ### src/components/Profile.vue
 * Logic, template and style for an `user` profile is found here.
 * Displays an SVG loading animation when data is being fetched.
-* Displays an error message to the UI, upon failure, while fetching a `user`.  
+* Displays an error message to the UI, upon failure, while fetching a `user`. 
+* Fires an action to fetch an `user` when mounted to DOM. 
+
+### src/store/module/UserList.js
+* Logic for fetching `users list` is found here.
+* Contains user list state, action creators
+
+### src/main.js
+* Entry point of view app.
+* Contains configurations used by the app, such as store and routing
+* Has route definitions defined to be use in(only in) `App.vue` 
+
+### src/App.vue
+* Wrapper component for other components.
+* Contains default styling used in app.
+* Imports other components to be rendered here.
+
+### src/assets/
+* Contains images used in the app.
+* Has SVG file used as a loading animation during fetching of data from API.
+
+### public/index.html/
+* Single HTML file used in the app.
+* Contains the div `ID` used by the application to render different views.
