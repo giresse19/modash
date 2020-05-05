@@ -3,7 +3,7 @@ Simple Node.js/MongoDb and Vue.js app which scrapes and analyze instagram(IG) pr
 
 ## Building and running locally:
 
-To run this locally, you need Node.js  10.14, a mongoDB cloud instance using atlas and a google service account.
+To run this locally, you need Node.js > 10, a mongoDB cloud instance using atlas and a google service account.
 
 ## Get mongoDb atlas instance:
 * Set MongoDB atlas instance from here: 
@@ -38,6 +38,7 @@ Back-end:
 ```sh
 cd modash/server
 $ npm install 
+$ npm run server
 ```
 * App should be  exposed at http://localhost:3000 and connected with mongoDB(via mongoDB atlas)
 
