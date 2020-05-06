@@ -25,9 +25,7 @@ key instead of a service account.
 
  - Also enable the Google Vision API for the google project you created.
 
- - Remember that step (2), ONLY works in the current session of the terminal. That is, if you set the google application
- credentials on terminal window and later closs that particular terminal window, you will need to run it again int the new
- terminal.Inorder to access the API.
+ - Remember that step (2), ONLY works in the current session of the terminal. That is, if you set the google application credentials on terminal window and later close that particular terminal window, you will need to run it again in the new terminal window inorder to access the API.
 
 
  Navigate to a chosen folder:
