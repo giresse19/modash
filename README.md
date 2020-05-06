@@ -135,6 +135,10 @@ cd modash/client/modash
 $ npm install
 $ npm run serve 
 ```
+* To run F.E test: 
+````sh
+$ npm run test
+````
 * Navigate to: http://localhost:8080 to view app
 
 ### Root files

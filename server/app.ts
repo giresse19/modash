@@ -11,6 +11,7 @@ app.use(express.json({ extended: false }));
 
 app.use((req: any, res: any, next: any) => {
   res.setHeader("Content-Type", "application/json");
+
   // To avoid CORS issue, since development is only done locally.
   res.header("Access-Control-Allow-Origin", "*");
 
@@ -53,4 +54,5 @@ app.use(
     next: any
   ) => res.apiResponse("Server error. " + err)
 );
+
 module.exports = app;

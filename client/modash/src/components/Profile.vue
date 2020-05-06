@@ -5,8 +5,8 @@
       <div class="loader" v-if="!profileDataIsLoaded && isEmpty(error)">
         <img height="87" width="100" src="../assets/load.svg" alt="loader" />
       </div>
-      <div class="loader" style="width: 471px;" v-if="!isEmpty(error)">       
-        <strong>{{error.message}}</strong>
+      <div class="loader" style="width: 471px;" v-if="!isEmpty(error)">
+        <strong>{{ error.message }}</strong>
       </div>
     </div>
     <div class="profile">
@@ -267,15 +267,17 @@ export default {
         );
         if (user.status === 200) {
           this.profileDataIsLoaded = true;
-          this.profileData = user.data;          
+          this.profileData = user.data;
         }
-      } catch (error) {        
+      } catch (error) {
         this.error = error.response.data;
       }
     },
     isEmpty(obj) {
-    return Object.keys(obj).length === 0;
-},
+      if (obj) {
+        return Object.keys(obj).length === 0;
+      }
+    },
     formatTimeStamp(timestamp) {
       return moment.unix(timestamp).format("MMMM D, YYYY");
     },
@@ -322,7 +324,6 @@ export default {
 article {
   padding: 0em;
 }
-
 
 .media {
   display: grid;
