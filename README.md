@@ -1,4 +1,5 @@
-## Instagram scraping app Simple Node.js/MongoDb and Vue.js app which scrapes and analyze instagram(IG) professional accounts.
+## Instagram scraping app:
+ Simple Node.js/MongoDb and Vue.js app which scrapes and analyze instagram(IG) professional accounts.
 
 ## Building and running locally:
 
