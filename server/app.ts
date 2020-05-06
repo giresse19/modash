@@ -1,3 +1,4 @@
+export{}
 const db = require("./config/db.ts");
 const services = require("./app/services/profile.ts");
 

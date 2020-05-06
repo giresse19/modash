@@ -1,4 +1,3 @@
-export{}
 process.on('uncaughtException', console.error);
 
 const config = require("./config/config.ts");
