@@ -5,17 +5,11 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint",
-    "test": "./node_modules/.bin/jest"
+    "lint": "vue-cli-service lint"
   },
   "dependencies": {
     "axios": "^0.19.2",
-    "babel-core": "^7.0.0-bridge.0",
-    "babel-loader": "^8.1.0",
-    "babel-preset-env": "^1.7.0",
-    "core-js": "^3.6.4",
     "moment": "^2.25.1",
-    "sinon": "^9.0.2",
     "vue": "^2.6.11",
     "vue-property-decorator": "^8.4.2",
     "vue-router": "^3.1.6",

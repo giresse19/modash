@@ -13,7 +13,7 @@ app.use(express.json({ extended: false }));
 app.use((req: any, res: any, next: any) => {
   res.setHeader("Content-Type", "application/json");
 
-  // To avoid CORS issue, since development is only done locally.
+  // To avoid CORS issues
   res.header("Access-Control-Allow-Origin", "*");
 
   // To parse responses from services and return them as proper API responses

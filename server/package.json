@@ -2,10 +2,10 @@
   "name": "modash-app",
   "version": "1.0.0",
   "description": "",
-  "main": "server.ts",
+  "main": "src/server.ts",
   "scripts": {
-    "start": "node server.ts",
-    "server": "nodemon server.ts",
+    "start": "node ./src/server.ts",
+    "server": "nodemon ./src/server.ts",
     "tsc": "tsc"
   },
   "keywords": [],

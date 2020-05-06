@@ -72,14 +72,14 @@ $ npm run server
 | `Readme.md` | This file
 | `package.json` | NPM data including node and npm engine versions
 
-### server.ts
+### ./src/server.ts
 * Main entrance point, also defined as this on `package.json`
 * Catches all exceptions and logs, preventing errors to crash process
 * Shows stack traces of exceptions in development env.
 * Uses `process.env.PORT` to define listen port, fallbacks to `3000`
 * listens to `./app.js`
 
-### app.ts
+### ./src/app.ts
 * Isolated Express App (without the server).
 * It has only one custom middleware that
   * Sets response header for JSON
@@ -91,37 +91,37 @@ $ npm run server
 * It has a fallback route for 404.
 * It has an Error route to catch uncaught errors.
 
-### app/models/Users.ts
+### ./src/app/models/Users.ts
 * Mongoose connection starts here
 * Mongoose models and their schemas are defined and exported here
 
-### config/db.ts
+### ./src/config/db.ts
 * Uses `src/models` to get Mongoose Models
 * Connects to mongoDB atlas (https://cloud.mongodb.com/v2/5ea07fec9dae766e6eb7205f#metrics/replicaSet/5ea08375d1169842708bdf44/explorer)
 
-### config/db.ts
+### ./src/config/db.ts
 * Config for mongoDB atlas is found here
 * Contains all global configurations and variables used in the App here too.
 * get a database user's name and password and insert in the variables
   `db_user` and `db_password` respectively.
 
-### app/helper/getImageRequest.ts
+### ./src/app/helper/getImageRequest.ts
 * Utility methods to fetch data from instagram with instagram `username`, get insights with media
 gotten from fetched instagram user from google vision API is located here. 
 * All subroutines are seperated as functions including **Checks** and **Data conversions**
 
-### app/helper/getMedia.ts
+### ./src/app/helper/getMedia.ts
 * Utility methods to scrape the media data returned from instagram API and prepare it in the correct format
 inorder to get image insights from google API.
 
-### app/helper/parseCaption.ts
+### ./src/app/helper/parseCaption.ts
 * Has utility methods to parse media comments by `#` and `@` inorder for them to be stored  in a suitable data structure in the DB.
 
-### app/routes/getUsername.ts
+### ./src/app/routes/getUsername.ts
 * Contains endpoint for accepting HTTP POST IG `username` and calls the `service.profile` method in the servie inorder to store user profile to DB.
 * Validate's username entered and return an error is name is missing in query params.
 
-### app/services/profile.ts
+### ./src/app/services/profile.ts
 * Main App logic is here
 * Contains 3 exported services (see `module.exports = `)
 * All subroutines are seperated as functions including **Checks** and **Data conversions** and handled in `helper` folder
@@ -135,10 +135,7 @@ cd modash/client/modash
 $ npm install
 $ npm run serve 
 ```
-* To run F.E test: 
-````sh
-$ npm run test
-````
+
 * Navigate to: http://localhost:8080 to view app
 
 ### Root files
