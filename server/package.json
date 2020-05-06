@@ -21,7 +21,7 @@
     "mongoose": "^5.9.10",
     "ts-node-dev": "^1.0.0-pre.44",
     "typescript": "^3.8.3",
-    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"    
+    
   },
   "devDependencies": {
     "@types/node": "^13.13.4",
